@@ -1,9 +1,12 @@
 # google-task
 
-How to run:
+## Docs
+Sequence diagrams can be found at /docs
 
--> Setup env variables 
-    '$ export GOOGLE_CLIENT_ID=...'
-    '$ export GOOGLE_CLIENT_SECRET=...'
--> Run app
-    '$ mvn clean spring-boot:run'
+## Usage
+```bash
+export GOOGLE_CLIENT_ID=...
+export GOOGLE_CLIENT_SECRET=...
+mvn clean spring-boot:run
+```
+Accessed at localhost:8080
