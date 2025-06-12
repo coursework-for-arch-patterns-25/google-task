@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>ConSOLIDate.org – Login</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <div class="container">
+
+        <h1>ConSOLIDate.org</h1>
+
+        <div th:if="${name} == null" class="login-box">
+            <p>Welcome! Please log in:</p>
+            <a href="/oauth2/authorization/google">
+                <button class="login-button">Login by Google</button>
+            </a>
+        </div>
+
+        <div th:if="${name} != null" class="welcome-box">
+            <p th:text="'Welcome ' + ${name} + ' in ConSOLIDate.org'"></p>
+        </div>
+
+    </div>
+</body>
+</html>
