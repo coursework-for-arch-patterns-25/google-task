@@ -1,0 +1,25 @@
+@startuml
+actor User
+participant Browser
+participant "Spring Boot Application"
+participant "Google OAuth Server"
+
+User -> Browser : Open http://localhost:8080/
+Browser -> "Spring Boot Application" : GET /
+"Spring Boot Application" -> Browser : Render home page with Google login button
+
+User -> Browser : Clicks "Login by Google" button
+Browser -> "Spring Boot Application" : GET /oauth2/authorization/google
+"Spring Boot Application" -> Browser : HTTP 302 Redirect to Google OAuth endpoint
+Browser -> "Google OAuth Server" : Authorization request
+
+User -> "Google OAuth Server" : Login or cancel
+"Google OAuth Server" -> Browser : Redirect to /login/oauth2/code/google (with code or error)
+Browser -> "Spring Boot Application" : GET /login/oauth2/code/google?code=... or ?error=...
+
+"Spring Boot Application" -> "Google OAuth Server" : Exchanges code for tokens
+"Google OAuth Server" --> "Spring Boot Application" : id_token, access_token, user info
+
+"Spring Boot Application" -> Browser : Redirect to home page (/) and display welcome message
+Browser -> User : Sees "Welcome <Name> in ConSOLIDate.org"
+@enduml

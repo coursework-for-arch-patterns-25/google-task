@@ -1,0 +1,12 @@
+@startuml
+actor User
+participant "ConSOLIDate.org Website"
+participant "Google"
+
+User -> "ConSOLIDate.org Website" : Opens home page "/"
+User -> "ConSOLIDate.org Website" : Clicks "Login by Google" button
+"ConSOLIDate.org Website" -> "Google" : Redirects to Google login
+User -> "Google" : Signs in with Google account (or cancels)
+"Google" --> "ConSOLIDate.org Website" : Returns to app after login
+"ConSOLIDate.org Website" -> User : Displays welcome message with user's name
+@enduml
