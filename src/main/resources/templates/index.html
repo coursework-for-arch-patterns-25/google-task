@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>Demo</title>
+    <meta name="description" content=""/>
+    <meta name="viewport" content="width=device-width"/>
+
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+
+    <base href="/"/>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css"/>
+    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <h1>Login</h1>
+    <div class="container unauthenticated">
+        <div>
+            With Google: <a href="/oauth2/authorization/google">click here</a>
+        </div>
+    </div>
+    <div class="container authenticated" style="display: none">
+        Logged in as: <span id="user"></span>
+        <div>
+            <button onClick="logout()" class="btn btn-primary">Logout</button>
+        </div>
+    </div>
+    <button id="loadPointsBtn" onClick="getPoints()">Get points</button>
+    <pre id="output" style="background:#f8f9fa; padding:10px; margin-top:10px; border:1px solid #ddd;"></pre>
+    <script type="text/javascript" src="/webjars/js-cookie/js.cookie.js"></script>
+    <script type="text/javascript">
+
+        $.ajaxSetup({
+            beforeSend : function(xhr, settings) {
+                if (settings.type == 'POST' || settings.type == 'PUT'
+                    || settings.type == 'DELETE') {
+                    if (!(/^http:.*/.test(settings.url) || /^https:.*/
+                        .test(settings.url))) {
+
+                        var token = $("meta[name='_csrf']").attr("content");
+                        var header = $("meta[name='_csrf_header']").attr("content");
+
+                        xhr.setRequestHeader(header, token);
+
+
+                    }
+                }
+            }
+        });
+
+        $.get("/user", function(data) {
+            $("#user").html(data.name);
+            $(".unauthenticated").hide();
+            $(".authenticated").show();
+        });
+        var logout = function() {
+            $.post("/logout", function() {
+                $("#user").html('');
+                $(".unauthenticated").show();
+                $(".authenticated").hide();
+            })
+            return true;
+        }
+
+        var getPoints = function() {
+            $.get("/api/points/")
+                .done(function(data) {
+                    $("#output").text("Data:\n" + JSON.stringify(data, null, 2));
+                })
+                .fail(function(xhr) {
+                    if (xhr.status === 401) {
+                        $("#output").text("Unauthorized (401)");
+                    } else if (xhr.status === 403) {
+                        $("#output").text("Forbidden (403)");
+                    } else {
+                        $("#output").text("Error: " + xhr.status + " " + xhr.statusText);
+                    }
+                });
+        };
+    </script>
+</body>
+</html>
