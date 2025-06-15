@@ -115,10 +115,10 @@ sequenceDiagram
 ## Application Screenshots
 
 ### Welcome Page
-![Welcome Page](images/welcome-page.png)
+![Welcome Page](images/welcome.png)
 
 ### Account Page
-![Account Page](images/account-page.png)
+![Account Page](images/account.png)
 
 ### Error State
-![Error Page](images/error-page.png)
+![Error Page](images/error.png)
