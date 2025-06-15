@@ -111,3 +111,14 @@ sequenceDiagram
         SpringApp->>Browser: 200 OK (index.html with error message)
     end
 ```
+
+## Application Screenshots
+
+### Welcome Page
+![Welcome Page](images/welcome-page.png)
+
+### Account Page
+![Account Page](images/account-page.png)
+
+### Error State
+![Error Page](images/error-page.png)
