@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: google-task
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${APP_GOOGLE_CLIENT_ID}
+            client-secret: ${APP_GOOGLE_CLIENT_SECRET}
+            scope: profile, email
+            provider: google
+            client-name: Google
