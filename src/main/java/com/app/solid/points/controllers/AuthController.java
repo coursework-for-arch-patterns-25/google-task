@@ -12,6 +12,9 @@ import java.util.Map;
 public class AuthController {
     @RequestMapping("/user")
     public Map<String, Object> user(@AuthenticationPrincipal OAuth2User principal) {
+        if (principal == null) {
+            return null;
+        }
         return Collections.singletonMap("name", principal.getAttribute("name"));
     }
 }
